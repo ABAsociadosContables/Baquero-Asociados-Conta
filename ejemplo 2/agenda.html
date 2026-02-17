@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="Agenda tu asesoría contable, tributaria o financiera con Baquero & Asociados Contables — Virtual o presencial.">
+    <meta name="keywords" content="agendar asesoría contable, cita tributaria, asesoría virtual contabilidad Colombia">
+    <title>Agenda tu Asesoría — Baquero & Asociados Contables</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+
+<body>
+
+    <!-- ========== HEADER ========== -->
+    <header class="header scrolled" id="header">
+        <div class="container">
+            <a href="index.html" class="logo">
+                <div class="logo-icon">AB</div>
+                <div class="logo-text">
+                    <span class="firm-name">Baquero & Asociados</span>
+                    <span class="firm-sub">Contables</span>
+                </div>
+            </a>
+            <nav class="nav-menu" id="navMenu">
+                <a href="index.html">Inicio</a>
+                <a href="nosotros.html">Quiénes Somos</a>
+                <a href="servicios.html">Servicios</a>
+                <a href="agenda.html" class="active">Agenda tu Asesoría</a>
+                <a href="contacto.html">Contáctanos</a>
+                <div class="nav-cta">
+                    <a href="agenda.html" class="btn btn-primary btn-sm">Agenda Ahora</a>
+                </div>
+            </nav>
+            <button class="menu-toggle" id="menuToggle" aria-label="Menú">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </header>
+
+    <!-- ========== PAGE HEADER ========== -->
+    <section class="page-header">
+        <h1>Agenda tu Asesoría</h1>
+        <p>Selecciona el tipo de asesoría, fecha y hora. Te confirmamos de inmediato.</p>
+        <div class="breadcrumb">
+            <a href="index.html">Inicio</a> / <span>Agenda tu Asesoría</span>
+        </div>
+    </section>
+
+    <!-- ========== AGENDA ========== -->
+    <section class="section">
+        <div class="container">
+            <div class="grid-2" style="gap:48px; align-items:start;">
+
+                <!-- Calendar & Time -->
+                <div class="reveal-left">
+                    <h3 style="color:var(--azul-oscuro); margin-bottom:24px;">📅 Selecciona Fecha y Hora</h3>
+
+                    <div class="calendar-wrapper">
+                        <div class="calendar-header">
+                            <button onclick="prevMonth()" aria-label="Mes anterior">◀</button>
+                            <h3 id="calendarMonth"></h3>
+                            <button onclick="nextMonth()" aria-label="Mes siguiente">▶</button>
+                        </div>
+                        <div class="calendar-grid" id="calendarGrid"></div>
+                    </div>
+
+                    <div id="timeSlotsContainer" style="display:none; margin-top:24px;"></div>
+
+                    <!-- Hidden fields for selected date/time -->
+                    <input type="hidden" id="selectedDate">
+                    <input type="hidden" id="selectedTime">
+                </div>
+
+                <!-- Form -->
+                <div class="reveal-right">
+                    <h3 style="color:var(--azul-oscuro); margin-bottom:24px;">📝 Datos de la Asesoría</h3>
+
+                    <form id="agendaForm">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="agendaNombre">Nombre completo *</label>
+                                <input type="text" id="agendaNombre" placeholder="Tu nombre" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="agendaCorreo">Correo electrónico *</label>
+                                <input type="email" id="agendaCorreo" placeholder="tu@correo.com" required>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="agendaTelefono">Teléfono / WhatsApp *</label>
+                                <input type="tel" id="agendaTelefono" placeholder="300 000 0000" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="agendaTipo">Tipo de asesoría *</label>
+                                <select id="agendaTipo" required>
+                                    <option value="">Selecciona...</option>
+                                    <option value="Contabilidad PYMES">Contabilidad para PYMES</option>
+                                    <option value="Asesoría Tributaria">Asesoría Tributaria</option>
+                                    <option value="Planeación Tributaria">Planeación Tributaria</option>
+                                    <option value="Revisoría Fiscal">Revisoría Fiscal</option>
+                                    <option value="Nómina y Seguridad Social">Nómina y Seguridad Social</option>
+                                    <option value="Asesoría Financiera">Asesoría Financiera</option>
+                                    <option value="Consulta General">Consulta General</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="agendaModalidad">Modalidad *</label>
+                            <select id="agendaModalidad" required>
+                                <option value="">Selecciona...</option>
+                                <option value="Virtual">Virtual (videollamada)</option>
+                                <option value="Presencial">Presencial (oficina)</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="agendaMensaje">Mensaje adicional (opcional)</label>
+                            <textarea id="agendaMensaje" placeholder="Describe brevemente tu situación o consulta..."
+                                rows="3"></textarea>
+                        </div>
+
+                        <div class="legal-notice">
+                            <strong>🔒 Política de Habeas Data:</strong> Al enviar este formulario, aceptas que Baquero
+                            & Asociados Contables recopile y use tus datos personales exclusivamente para gestionar tu
+                            solicitud de asesoría, conforme a la Ley 1581 de 2012 de Protección de Datos Personales en
+                            Colombia. Tus datos no serán compartidos con terceros.
+                        </div>
+
+                        <div class="form-actions">
+                            <button type="submit" class="btn btn-primary btn-lg" style="width:100%;">📅 Confirmar
+                                Asesoría</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== INFO ========== -->
+    <section class="section section-alt">
+        <div class="container">
+            <div class="section-header reveal">
+                <span class="overline">¿Cómo funciona?</span>
+                <h2>Tu asesoría en 3 pasos</h2>
+            </div>
+
+            <div class="grid-3">
+                <div class="card reveal" style="text-align:center;">
+                    <div style="font-size:3rem; margin-bottom:16px;">1️⃣</div>
+                    <h3>Selecciona</h3>
+                    <p>Elige el tipo de asesoría, fecha y hora que más te convenga. Disponemos de horarios amplios de
+                        lunes a sábado.</p>
+                </div>
+                <div class="card reveal" style="text-align:center;">
+                    <div style="font-size:3rem; margin-bottom:16px;">2️⃣</div>
+                    <h3>Confirma</h3>
+                    <p>Completa el formulario con tus datos y describe tu consulta. Te enviaremos una confirmación por
+                        correo electrónico.</p>
+                </div>
+                <div class="card reveal" style="text-align:center;">
+                    <div style="font-size:3rem; margin-bottom:16px;">3️⃣</div>
+                    <h3>Recibe Asesoría</h3>
+                    <p>Asiste a tu asesoría virtual o presencial. Un profesional experto te guiará con soluciones claras
+                        y personalizadas.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== FOOTER ========== -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-about">
+                    <a href="index.html" class="logo">
+                        <div class="logo-icon">AB</div>
+                        <div class="logo-text">
+                            <span class="firm-name">Baquero & Asociados</span>
+                            <span class="firm-sub">Contables</span>
+                        </div>
+                    </a>
+                    <p>Firma especializada en servicios contables, tributarios y financieros para PYMES, emprendedores y
+                        personas naturales en Colombia.</p>
+                    <div class="footer-social">
+                        <a href="https://wa.me/573222120235" target="_blank" aria-label="WhatsApp">💬</a>
+                        <a href="mailto:asesoriascontablesbaquero@yahoo.com" aria-label="Email">✉️</a>
+                    </div>
+                </div>
+                <div class="footer-col">
+                    <h4>Enlaces</h4>
+                    <a href="index.html">Inicio</a>
+                    <a href="nosotros.html">Quiénes Somos</a>
+                    <a href="servicios.html">Servicios</a>
+                    <a href="agenda.html">Agenda tu Asesoría</a>
+                    <a href="contacto.html">Contáctanos</a>
+                </div>
+                <div class="footer-col">
+                    <h4>Servicios</h4>
+                    <a href="servicios.html">Contabilidad PYMES</a>
+                    <a href="servicios.html">Asesoría Tributaria</a>
+                    <a href="servicios.html">Planeación Tributaria</a>
+                    <a href="servicios.html">Revisoría Fiscal</a>
+                    <a href="servicios.html">Nómina</a>
+                    <a href="servicios.html">Asesoría Financiera</a>
+                </div>
+                <div class="footer-col">
+                    <h4>Contacto</h4>
+                    <a href="#">📍 Calle 15 40 01</a>
+                    <a href="tel:+573222120235">📱 322 212 0235</a>
+                    <a href="mailto:asesoriascontablesbaquero@yahoo.com">✉️ asesoriascontablesbaquero@yahoo.com</a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2026 Baquero & Asociados Contables. Todos los derechos reservados.</p>
+                <div>
+                    <a href="#">Política de Privacidad</a> • <a href="#">Habeas Data</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- WhatsApp Float -->
+    <a href="https://wa.me/573222120235?text=Hola%2C%20quiero%20agendar%20una%20asesoría" target="_blank"
+        class="whatsapp-float" aria-label="Contáctanos por WhatsApp">
+        <svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+            <path
+                d="M16.004 0h-.008C7.174 0 0 7.176 0 16c0 3.5 1.128 6.744 3.046 9.378L1.054 31.29l6.118-1.958A15.924 15.924 0 0016.004 32C24.826 32 32 24.822 32 16S24.826 0 16.004 0zm9.31 22.606c-.388 1.092-1.938 1.998-3.156 2.264-.834.178-1.922.32-5.588-1.2-4.688-1.946-7.706-6.698-7.94-7.008-.226-.31-1.89-2.516-1.89-4.798s1.196-3.404 1.62-3.87c.388-.426.916-.608 1.224-.608.152 0 .288.008.41.014.424.018.636.042.916.71.35.836 1.2 2.924 1.304 3.136.104.212.206.494.066.784-.13.296-.244.48-.458.736-.212.258-.438.458-.652.74-.196.244-.414.506-.172.93.242.424 1.076 1.776 2.312 2.878 1.59 1.418 2.892 1.878 3.358 2.07.35.146.766.114.988-.132.282-.314.63-.836.984-1.352.252-.368.57-.414.952-.272.386.136 2.466 1.164 2.89 1.376.424.212.706.318.81.494.102.176.102 1.026-.286 2.118z" />
+        </svg>
+        <span class="tooltip">¡Escríbenos por WhatsApp!</span>
+    </a>
+
+    <!-- Success Modal -->
+    <div class="modal-overlay" id="modalOverlay">
+        <div class="modal">
+            <div class="modal-icon">✅</div>
+            <h3>¡Éxito!</h3>
+            <p class="modal-message"></p>
+            <button class="btn btn-primary" onclick="closeModal()">Cerrar</button>
+        </div>
+    </div>
+
+    <script src="js/main.js"></script>
+    <script src="js/agenda.js"></script>
+</body>
+
+</html>

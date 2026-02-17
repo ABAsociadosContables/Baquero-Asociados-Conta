@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow">
+    <title>Panel Administrativo — Baquero & Asociados Contables</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+
+<body>
+
+    <!-- ========== LOGIN ========== -->
+    <div class="admin-login" id="adminLogin">
+        <div class="admin-login-box">
+            <a href="index.html" class="logo">
+                <div class="logo-icon">AB</div>
+                <div class="logo-text">
+                    <span class="firm-name" style="color:var(--azul-oscuro);">Baquero & Asociados</span>
+                    <span class="firm-sub" style="color:var(--gris);">Contables</span>
+                </div>
+            </a>
+            <h2>Panel Administrativo</h2>
+            <p class="subtitle">Ingresa tus credenciales para acceder</p>
+
+            <p id="loginError"
+                style="display:none; color:var(--rojo); text-align:center; margin-bottom:16px; font-size:0.9rem; font-weight:600;">
+            </p>
+
+            <form id="adminLoginForm">
+                <div class="form-group">
+                    <label for="adminUser">Usuario</label>
+                    <input type="text" id="adminUser" placeholder="admin" required>
+                </div>
+                <div class="form-group">
+                    <label for="adminPass">Contraseña</label>
+                    <input type="password" id="adminPass" placeholder="••••••••" required>
+                </div>
+                <button type="submit" class="btn btn-primary" style="width:100%;">Iniciar Sesión</button>
+            </form>
+
+            <div
+                style="margin-top:24px; padding:16px; background:rgba(37,99,235,0.06); border-radius:var(--radius-sm); font-size:0.82rem; color:var(--gris);">
+                <strong style="color:var(--azul-oscuro);">Credenciales de acceso:</strong><br>
+                Usuario: <code style="background:var(--gris-bg); padding:2px 8px; border-radius:4px;">admin</code><br>
+                Contraseña: <code
+                    style="background:var(--gris-bg); padding:2px 8px; border-radius:4px;">Baquero2024</code>
+            </div>
+        </div>
+    </div>
+
+    <!-- ========== ADMIN PANEL ========== -->
+    <div class="admin-panel" id="adminPanel">
+
+        <!-- Sidebar -->
+        <aside class="admin-sidebar">
+            <div class="logo" style="padding:0 24px; margin-bottom:40px;">
+                <div class="logo-icon">AB</div>
+                <div class="logo-text">
+                    <span class="firm-name">Baquero & Asociados</span>
+                    <span class="firm-sub">Contables</span>
+                </div>
+            </div>
+
+            <nav>
+                <a href="#" data-section="section-dashboard" class="active">
+                    <span class="icon">📊</span> Dashboard
+                </a>
+                <a href="#" data-section="section-agenda">
+                    <span class="icon">📅</span> Citas / Agendas
+                </a>
+                <a href="#" data-section="section-contacts">
+                    <span class="icon">💬</span> Mensajes
+                </a>
+                <a href="#" data-section="section-news">
+                    <span class="icon">📰</span> Noticias
+                </a>
+                <a href="#" data-section="section-calendar">
+                    <span class="icon">🗓️</span> Calendario Tributario
+                </a>
+                <a href="#" data-section="section-texts">
+                    <span class="icon">✏️</span> Editar Textos
+                </a>
+                <a href="#" data-section="section-files">
+                    <span class="icon">📁</span> Archivos PDF/Excel
+                </a>
+                <a href="#" data-section="logout"
+                    style="margin-top:40px; border-top:1px solid rgba(255,255,255,0.1); padding-top:20px;">
+                    <span class="icon">🚪</span> Cerrar Sesión
+                </a>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="admin-main">
+
+            <!-- ===== DASHBOARD ===== -->
+            <div class="admin-section" id="section-dashboard">
+                <div class="admin-header">
+                    <h2>📊 Dashboard</h2>
+                    <p style="color:var(--gris);">Vista general del sistema</p>
+                </div>
+
+                <div class="admin-stat-grid">
+                    <div class="admin-stat">
+                        <div class="number" id="statAppointments">0</div>
+                        <div class="label">Citas Registradas</div>
+                    </div>
+                    <div class="admin-stat">
+                        <div class="number" id="statContacts">0</div>
+                        <div class="label">Mensajes Recibidos</div>
+                    </div>
+                    <div class="admin-stat">
+                        <div class="number" id="statNews">0</div>
+                        <div class="label">Noticias Publicadas</div>
+                    </div>
+                    <div class="admin-stat">
+                        <div class="number" id="statPending" style="color:var(--dorado);">0</div>
+                        <div class="label">Citas Pendientes</div>
+                    </div>
+                </div>
+
+                <div class="admin-card">
+                    <h3>Actividad Reciente</h3>
+                    <div id="recentActivity">
+                        <p style="color:var(--gris);text-align:center;padding:20px;">Cargando...</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ===== CITAS ===== -->
+            <div class="admin-section" id="section-agenda" style="display:none;">
+                <div class="admin-header">
+                    <h2>📅 Citas / Agendas</h2>
+                    <p style="color:var(--gris);">Gestiona las citas de asesoría</p>
+                </div>
+                <div class="admin-card">
+                    <h3>Lista de Citas</h3>
+                    <div id="appointmentsList"></div>
+                </div>
+            </div>
+
+            <!-- ===== MENSAJES ===== -->
+            <div class="admin-section" id="section-contacts" style="display:none;">
+                <div class="admin-header">
+                    <h2>💬 Mensajes de Contacto</h2>
+                    <p style="color:var(--gris);">Mensajes recibidos a través del formulario</p>
+                </div>
+                <div class="admin-card">
+                    <h3>Mensajes</h3>
+                    <div id="contactsList"></div>
+                </div>
+            </div>
+
+            <!-- ===== NOTICIAS ===== -->
+            <div class="admin-section" id="section-news" style="display:none;">
+                <div class="admin-header">
+                    <h2>📰 Noticias y Publicaciones</h2>
+                    <p style="color:var(--gris);">Publica noticias y actualizaciones normativas</p>
+                </div>
+
+                <div class="admin-card">
+                    <h3>Publicar Nueva Noticia</h3>
+                    <form id="newsForm">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="newsTitle">Título</label>
+                                <input type="text" id="newsTitle" placeholder="Título de la noticia" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="newsCategory">Categoría</label>
+                                <select id="newsCategory">
+                                    <option value="Normativa DIAN">Normativa DIAN</option>
+                                    <option value="Tributario">Tributario</option>
+                                    <option value="Contable">Contable</option>
+                                    <option value="Laboral">Laboral</option>
+                                    <option value="Nota de la Firma">Nota de la Firma</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="newsContent">Contenido</label>
+                            <textarea id="newsContent" placeholder="Escribe el contenido de la noticia..." rows="5"
+                                required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary">📰 Publicar Noticia</button>
+                    </form>
+                </div>
+
+                <div class="admin-card">
+                    <h3>Noticias Publicadas</h3>
+                    <div id="newsList"></div>
+                </div>
+            </div>
+
+            <!-- ===== CALENDARIO TRIBUTARIO ===== -->
+            <div class="admin-section" id="section-calendar" style="display:none;">
+                <div class="admin-header">
+                    <h2>🗓️ Calendario Tributario</h2>
+                    <p style="color:var(--gris);">Gestiona las fechas importantes del calendario tributario</p>
+                </div>
+
+                <div class="admin-card">
+                    <h3>Agregar Fecha Tributaria</h3>
+                    <form id="taxCalendarForm">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="taxTitle">Evento / Obligación</label>
+                                <input type="text" id="taxTitle" placeholder="Ej: Declaración de Renta" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="taxDate">Fecha Límite</label>
+                                <input type="date" id="taxDate" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="taxDescription">Descripción (opcional)</label>
+                            <textarea id="taxDescription" placeholder="Detalles adicionales..." rows="3"></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary">🗓️ Agregar al Calendario</button>
+                    </form>
+                </div>
+
+                <div class="admin-card">
+                    <h3>Fechas Registradas</h3>
+                    <div id="taxCalendarList"></div>
+                </div>
+            </div>
+
+            <!-- ===== EDITAR TEXTOS ===== -->
+            <div class="admin-section" id="section-texts" style="display:none;">
+                <div class="admin-header">
+                    <h2>✏️ Editar Textos del Sitio</h2>
+                    <p style="color:var(--gris);">Modifica los textos principales de la página web</p>
+                </div>
+
+                <div class="admin-card">
+                    <h3>Texto del Hero (Inicio)</h3>
+                    <div class="form-group">
+                        <label>Título Principal</label>
+                        <input type="text" id="textHeroTitle" value="Tu aliado en soluciones contables y tributarias">
+                    </div>
+                    <div class="form-group">
+                        <label>Subtítulo</label>
+                        <textarea id="textHeroSubtitle"
+                            rows="3">En Baquero & Asociados Contables acompañamos a PYMES, emprendedores y personas naturales con asesoría integral para que cumplas tus obligaciones fiscales con tranquilidad.</textarea>
+                    </div>
+                    <button class="btn btn-primary btn-sm" onclick="saveTexts()">💾 Guardar Cambios</button>
+                </div>
+
+                <div class="admin-card">
+                    <h3>Horarios de Atención</h3>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Lunes a Viernes</label>
+                            <input type="text" id="textScheduleWeek" value="8:00 AM — 6:00 PM">
+                        </div>
+                        <div class="form-group">
+                            <label>Sábados</label>
+                            <input type="text" id="textScheduleSat" value="8:00 AM — 12:00 PM">
+                        </div>
+                    </div>
+                    <button class="btn btn-primary btn-sm" onclick="saveTexts()">💾 Guardar Cambios</button>
+                </div>
+
+                <div
+                    style="margin-top:16px; padding:16px; background:rgba(37,99,235,0.06); border-radius:var(--radius-sm); font-size:0.85rem; color:var(--gris);">
+                    <strong>ℹ️ Nota:</strong> Los cambios de texto se guardan localmente en el navegador. Para cambios
+                    permanentes en el sitio web, edita directamente los archivos HTML correspondientes.
+                </div>
+            </div>
+
+            <!-- ===== ARCHIVOS ===== -->
+            <div class="admin-section" id="section-files" style="display:none;">
+                <div class="admin-header">
+                    <h2>📁 Archivos PDF y Excel</h2>
+                    <p style="color:var(--gris);">Sube y gestiona documentos para clientes</p>
+                </div>
+
+                <div class="admin-card">
+                    <h3>Subir Archivo</h3>
+                    <div class="form-group">
+                        <label for="fileUpload">Seleccionar archivo (PDF, Excel, Word)</label>
+                        <input type="file" id="fileUpload" accept=".pdf,.xlsx,.xls,.doc,.docx" style="padding:12px;">
+                    </div>
+                    <div class="form-group">
+                        <label for="fileDescription">Descripción del archivo</label>
+                        <input type="text" id="fileDescription" placeholder="Ej: Formulario 110 - Renta 2024">
+                    </div>
+                    <button class="btn btn-primary btn-sm" onclick="uploadFile()">📤 Subir Archivo</button>
+                </div>
+
+                <div class="admin-card">
+                    <h3>Archivos Cargados</h3>
+                    <div id="filesList">
+                        <p style="color:var(--gris);text-align:center;padding:20px;">No hay archivos cargados</p>
+                    </div>
+                </div>
+
+                <div
+                    style="margin-top:16px; padding:16px; background:rgba(37,99,235,0.06); border-radius:var(--radius-sm); font-size:0.85rem; color:var(--gris);">
+                    <strong>ℹ️ Nota:</strong> Los archivos se guardan localmente en el navegador. Para un sistema de
+                    archivos en producción, se recomienda implementar almacenamiento en servidor (como Google Drive,
+                    Dropbox Business o un servidor propio).
+                </div>
+            </div>
+
+        </main>
+    </div>
+
+    <script src="js/main.js"></script>
+    <script src="js/admin.js"></script>
+    <script>
+        // Extra admin functions
+        function saveTexts() {
+            const texts = {
+                heroTitle: document.getElementById('textHeroTitle')?.value || '',
+                heroSubtitle: document.getElementById('textHeroSubtitle')?.value || '',
+                scheduleWeek: document.getElementById('textScheduleWeek')?.value || '',
+                scheduleSat: document.getElementById('textScheduleSat')?.value || ''
+            };
+            localStorage.setItem('baquero_texts', JSON.stringify(texts));
+            alert('✅ Textos guardados correctamente');
+        }
+
+        function uploadFile() {
+            const fileInput = document.getElementById('fileUpload');
+            const desc = document.getElementById('fileDescription')?.value || 'Sin descripción';
+
+            if (!fileInput.files || fileInput.files.length === 0) {
+                alert('Selecciona un archivo para subir.');
+                return;
+            }
+
+            const file = fileInput.files[0];
+            const files = JSON.parse(localStorage.getItem('baquero_files') || '[]');
+            files.push({
+                id: Date.now(),
+                name: file.name,
+                size: (file.size / 1024).toFixed(1) + ' KB',
+                description: desc,
+                createdAt: new Date().toISOString()
+            });
+            localStorage.setItem('baquero_files', JSON.stringify(files));
+
+            fileInput.value = '';
+            document.getElementById('fileDescription').value = '';
+            loadFiles();
+            alert('✅ Archivo registrado correctamente');
+        }
+
+        function loadFiles() {
+            const files = JSON.parse(localStorage.getItem('baquero_files') || '[]');
+            const container = document.getElementById('filesList');
+            if (!container) return;
+
+            if (files.length === 0) {
+                container.innerHTML = '<p style="color:var(--gris);text-align:center;padding:20px;">No hay archivos cargados</p>';
+                return;
+            }
+
+            let html = '<table class="admin-table"><thead><tr><th>Archivo</th><th>Descripción</th><th>Tamaño</th><th>Fecha</th><th>Acciones</th></tr></thead><tbody>';
+            files.forEach((f, i) => {
+                const date = new Date(f.createdAt).toLocaleDateString('es-CO');
+                html += `<tr>
+          <td><strong>${f.name}</strong></td>
+          <td>${f.description}</td>
+          <td>${f.size}</td>
+          <td>${date}</td>
+          <td><button onclick="deleteFile(${i})" style="background:var(--rojo);color:white;border:none;padding:6px 12px;border-radius:8px;font-size:0.75rem;cursor:pointer;">Eliminar</button></td>
+        </tr>`;
+            });
+            html += '</tbody></table>';
+            container.innerHTML = html;
+        }
+
+        function deleteFile(index) {
+            if (!confirm('¿Eliminar este archivo?')) return;
+            const files = JSON.parse(localStorage.getItem('baquero_files') || '[]');
+            files.splice(index, 1);
+            localStorage.setItem('baquero_files', JSON.stringify(files));
+            loadFiles();
+        }
+
+        // Load files on section switch
+        const origShowSection = showSection;
+        showSection = function (id) {
+            origShowSection(id);
+            if (id === 'section-files') loadFiles();
+        };
+    </script>
+</body>
+
+</html>
